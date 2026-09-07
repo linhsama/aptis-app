@@ -720,10 +720,36 @@ body {
 .action-bar {
   display: flex;
   justify-content: space-between;
-  gap: 1rem;
+  align-items: center;
+  gap: 0.5rem;
   padding-top: 1.5rem;
   border-top: 1px solid var(--border);
-  flex-wrap: wrap;
+  flex-wrap: nowrap;
+}
+
+.action-bar > div {
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+  flex-wrap: nowrap !important;
+}
+
+@media (max-width: 640px) {
+  .action-bar {
+    gap: 0.25rem;
+    overflow-x: auto;
+    padding-bottom: 0.5rem;
+  }
+  
+  .action-bar button {
+    padding: 0.5rem 0.75rem;
+    font-size: 0.85rem;
+    white-space: nowrap;
+  }
+  
+  .kbd-hint {
+    display: none;
+  }
 }
 
 /* Results */
