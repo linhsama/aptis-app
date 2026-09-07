@@ -606,55 +606,49 @@ const ListeningPart1 = () => {
 
           {/* Action Bar */}
           <div className="action-bar" style={{ marginTop: 'auto', paddingTop: '0.85rem' }}>
-            <button
-              onClick={handlePrev}
-              disabled={currentIndex === 0}
-              className="btn btn-secondary"
-              style={{ opacity: currentIndex === 0 ? 0.5 : 1 }}
-            >
-              <ChevronLeft size={16} />
-              <span>Câu trước</span>
-            </button>
-
             <div style={{ display: 'flex', gap: '0.5rem' }}>
               <button
+                onClick={handlePrev}
+                disabled={currentIndex === 0}
+                className="btn btn-secondary btn-small"
+                style={{ borderRadius: '8px', padding: '0.45rem 0.85rem', fontSize: '0.86rem' }}
+              >
+                <ChevronLeft size={16} />
+                <span>Quay lại</span>
+              </button>
+              <button
+                onClick={handleNext}
+                disabled={currentIndex === activeQuestions.length - 1}
+                className="btn btn-secondary btn-small"
+                style={{ borderRadius: '8px', padding: '0.45rem 0.85rem', fontSize: '0.86rem' }}
+              >
+                <span>Tiếp theo</span>
+                <ChevronRight size={16} />
+              </button>
+            </div>
+
+            <div style={{ display: 'flex', gap: '0.5rem', alignItems: 'center' }}>
+              <button
                 onClick={handleResetCurrent}
-                className="btn btn-secondary"
-                title="Làm lại câu này"
+                className="btn btn-secondary btn-small"
+                style={{ borderRadius: '8px', padding: '0.45rem 0.85rem', fontSize: '0.86rem' }}
               >
                 <RotateCcw size={14} />
                 <span>Làm lại</span>
               </button>
 
-              {!isChecked ? (
+              {!isChecked && !isStudy && (
                 <button
                   onClick={handleCheck}
                   disabled={!selectedAnswer}
-                  className="btn btn-primary"
-                  style={{ opacity: !selectedAnswer ? 0.6 : 1 }}
+                  className="btn btn-primary btn-small"
+                  style={{ minWidth: '115px', borderRadius: '8px', padding: '0.45rem 0.95rem', fontSize: '0.86rem' }}
                 >
                   <CheckCircle size={16} />
-                  <span>Kiểm tra đáp án</span>
-                </button>
-              ) : (
-                <button
-                  onClick={handleNext}
-                  className="btn btn-primary"
-                >
-                  <span>{currentIndex < activeQuestions.length - 1 ? 'Câu tiếp theo' : 'Xem tổng kết'}</span>
-                  <ChevronRight size={16} />
+                  <span>Kiểm tra</span>
                 </button>
               )}
             </div>
-
-            <button
-              onClick={handleNext}
-              disabled={currentIndex === activeQuestions.length - 1 && !isChecked}
-              className="btn btn-secondary"
-            >
-              <span>Câu sau</span>
-              <ChevronRight size={16} />
-            </button>
           </div>
         </div>
       </div>

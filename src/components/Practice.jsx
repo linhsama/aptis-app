@@ -750,7 +750,7 @@ const Practice = () => {
 
         {/* Action Controls Bar */}
         <div className="action-bar" style={{ paddingTop: '1.25rem', borderTop: '1px solid var(--border)' }}>
-          <div>
+          <div style={{ display: 'flex', gap: '0.75rem' }}>
             <button
               onClick={handlePrev}
               disabled={currentIndex === 0}
@@ -758,11 +758,18 @@ const Practice = () => {
             >
               <ChevronLeft size={18} />
               <span>Quay lại</span>
-              <span className="kbd-hint">←</span>
+            </button>
+            <button
+              onClick={handleNext}
+              disabled={currentIndex === activeQuestions.length - 1}
+              className="btn btn-secondary"
+            >
+              <span>Tiếp theo</span>
+              <ChevronRight size={18} />
             </button>
           </div>
 
-          <div style={{ display: 'flex', gap: '0.75rem', alignItems: 'center', flexWrap: 'wrap' }}>
+          <div style={{ display: 'flex', gap: '0.75rem', alignItems: 'center' }}>
             {isChecked && !isStudy && (
               <button
                 onClick={handleResetQuestion}
@@ -781,19 +788,8 @@ const Practice = () => {
               >
                 <CheckCircle size={18} />
                 <span>Kiểm tra</span>
-                <span className="kbd-hint" style={{ background: 'rgba(255,255,255,0.25)', color: '#fff', borderColor: 'transparent' }}>Enter</span>
               </button>
             )}
-
-            <button
-              onClick={handleNext}
-              disabled={currentIndex === activeQuestions.length - 1}
-              className={`btn ${isChecked || isStudy ? 'btn-primary' : 'btn-secondary'}`}
-            >
-              <span>Tiếp theo</span>
-              <ChevronRight size={18} />
-              <span className="kbd-hint" style={isChecked ? { background: 'rgba(255,255,255,0.25)', color: '#fff', borderColor: 'transparent' } : {}}>→</span>
-            </button>
           </div>
         </div>
 

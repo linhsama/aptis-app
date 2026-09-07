@@ -630,7 +630,7 @@ const PracticePart4 = () => {
 
           {/* Action Controls Bar */}
           <div className="action-bar" style={{ paddingTop: '0.85rem', marginTop: 'auto', borderTop: '1px solid var(--border)' }}>
-            <div>
+            <div style={{ display: 'flex', gap: '0.5rem' }}>
               <button
                 onClick={handlePrev}
                 disabled={currentIndex === 0}
@@ -639,11 +639,19 @@ const PracticePart4 = () => {
               >
                 <ChevronLeft size={16} />
                 <span>Quay lại</span>
-                <span className="kbd-hint">←</span>
+              </button>
+              <button
+                onClick={handleNext}
+                disabled={currentIndex === activeQuestions.length - 1}
+                className="btn btn-secondary btn-small"
+                style={{ borderRadius: '8px', padding: '0.45rem 0.85rem', fontSize: '0.86rem' }}
+              >
+                <span>Tiếp theo</span>
+                <ChevronRight size={16} />
               </button>
             </div>
 
-            <div style={{ display: 'flex', gap: '0.5rem', alignItems: 'center', flexWrap: 'wrap' }}>
+            <div style={{ display: 'flex', gap: '0.5rem', alignItems: 'center' }}>
               {isChecked && !isStudy && (
                 <button
                   onClick={handleResetQuestion}
@@ -664,20 +672,8 @@ const PracticePart4 = () => {
                 >
                   <CheckCircle size={16} />
                   <span>Kiểm tra</span>
-                  <span className="kbd-hint" style={{ background: 'rgba(255,255,255,0.25)', color: '#fff', borderColor: 'transparent' }}>Enter</span>
                 </button>
               )}
-
-              <button
-                onClick={handleNext}
-                disabled={currentIndex === activeQuestions.length - 1}
-                className={`btn btn-small ${isChecked || isStudy ? 'btn-primary' : 'btn-secondary'}`}
-                style={{ borderRadius: '8px', padding: '0.45rem 0.85rem', fontSize: '0.86rem' }}
-              >
-                <span>Tiếp theo</span>
-                <ChevronRight size={16} />
-                <span className="kbd-hint" style={isChecked ? { background: 'rgba(255,255,255,0.25)', color: '#fff', borderColor: 'transparent' } : {}}>→</span>
-              </button>
             </div>
           </div>
         </div>
