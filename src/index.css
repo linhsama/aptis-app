@@ -904,15 +904,7 @@ body {
     padding: 0.875rem 0.75rem; /* Better touch target on mobile without being too large */
     font-size: 0.95rem;
   }
-  
-  .action-bar {
-    flex-direction: column;
-  }
-  
-  .action-bar .btn {
-    width: 100%;
-  }
-  
+
   .weak-topic-item {
     flex-direction: column;
     align-items: flex-start;
