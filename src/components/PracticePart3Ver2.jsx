@@ -35,7 +35,7 @@ const getOriginalQuestionNumber = (question) => {
   return match ? parseInt(match[0], 10) : 1;
 };
 
-const PracticePart3 = () => {
+const PracticePart3Ver2 = () => {
   const skill = 'reading';
   const part = 'part-3';
   const location = useLocation();
@@ -523,254 +523,81 @@ const PracticePart3 = () => {
         })}
       </div>
 
-      {/* GIAO DIỆN HIỂN THỊ */}
-      {isStudy ? (
-        <div className="part3-single-layout" style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+      {/* SINGLE COLUMN LAYOUT: Passage + Corresponding Questions */}
+      <div className="part3-single-layout" style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+        
+        <div className="part3-reading-card" style={{ width: '100%' }}>
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', paddingBottom: '0.4rem', borderBottom: '1px solid var(--border)' }}>
+            <div>
+              <h3 style={{ fontSize: '0.98rem', fontWeight: 700, color: 'var(--text-main)', margin: 0 }}>
+                Các Đoạn Văn và Câu Hỏi Tương Ứng (Giao diện Ver 2)
+              </h3>
+              <p className="text-muted" style={{ fontSize: '0.8rem', margin: '0.1rem 0 0 0' }}>
+                Học các ý chính thông qua việc nhóm các câu hỏi vào dưới mỗi đoạn văn tương ứng.
+              </p>
+            </div>
+          </div>
+
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(45%, 1fr))', gap: '1.25rem', marginTop: '1rem' }}>
+            {currentQuestion.peopleTexts.map((text, idx) => {
+              const char = String.fromCharCode(65 + idx);
+              
+              // Tìm các câu hỏi có đáp án thuộc về người này
+              const matchingQuestions = currentQuestion.questions.filter(q => q.answer === idx);
+
+              return (
+                <div key={idx} className="part3-person-item" style={{ padding: '1rem', background: '#f8fafc', borderRadius: '12px', border: '1px solid var(--border)' }}>
+                  <div className="part3-person-header">
+                    <div className="part3-person-badge">{char}</div>
+                    <span style={{ fontWeight: 700 }}>Người {char}</span>
+                  </div>
+                  <div
+                    className="part3-person-text"
+                    dangerouslySetInnerHTML={{ __html: text }}
+                    style={{ marginBottom: '1rem' }}
+                  />
+                  
+                  {matchingQuestions.length > 0 && (
+                    <div style={{ marginTop: '0.75rem', paddingTop: '0.75rem', borderTop: '1px dashed #cbd5e1' }}>
+                      <h4 style={{ fontSize: '0.85rem', fontWeight: 700, color: 'var(--primary)', marginBottom: '0.5rem' }}>Các câu hỏi thuộc đoạn này:</h4>
+                      <ul style={{ margin: 0, paddingLeft: '1.25rem', color: 'var(--text-main)', fontSize: '0.9rem', display: 'flex', flexDirection: 'column', gap: '0.3rem' }}>
+                        {matchingQuestions.map((mq, mqIdx) => (
+                          <li key={mqIdx}>{mq.text}</li>
+                        ))}
+                      </ul>
+                    </div>
+                  )}
+                </div>
+              );
+            })}
+          </div>
           
-          <div className="part3-reading-card" style={{ width: '100%' }}>
-            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', paddingBottom: '0.4rem', borderBottom: '1px solid var(--border)' }}>
-              <div>
-                <h3 style={{ fontSize: '0.98rem', fontWeight: 700, color: 'var(--text-main)', margin: 0 }}>
-                  Các Đoạn Văn và Câu Hỏi Tương Ứng (Chế độ Học)
-                </h3>
-                <p className="text-muted" style={{ fontSize: '0.8rem', margin: '0.1rem 0 0 0' }}>
-                  Học các ý chính thông qua việc nhóm các câu hỏi vào dưới mỗi đoạn văn tương ứng.
-                </p>
-              </div>
-            </div>
-
-            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(45%, 1fr))', gap: '1.25rem', marginTop: '1rem' }}>
-              {currentQuestion.peopleTexts.map((text, idx) => {
-                const char = String.fromCharCode(65 + idx);
-                
-                // Tìm các câu hỏi có đáp án thuộc về người này
-                const matchingQuestions = currentQuestion.questions.filter(q => q.answer === idx);
-
-                return (
-                  <div key={idx} className="part3-person-item" style={{ padding: '1rem', background: '#f8fafc', borderRadius: '12px', border: '1px solid var(--border)' }}>
-                    <div className="part3-person-header">
-                      <div className="part3-person-badge">{char}</div>
-                      <span style={{ fontWeight: 700 }}>Người {char}</span>
-                    </div>
-                    <div
-                      className="part3-person-text"
-                      dangerouslySetInnerHTML={{ __html: text }}
-                      style={{ marginBottom: '1rem' }}
-                    />
-                    
-                    {matchingQuestions.length > 0 && (
-                      <div style={{ marginTop: '0.75rem', paddingTop: '0.75rem', borderTop: '1px dashed #cbd5e1' }}>
-                        <h4 style={{ fontSize: '0.85rem', fontWeight: 700, color: 'var(--primary)', marginBottom: '0.5rem' }}>Các câu hỏi thuộc đoạn này:</h4>
-                        <ul style={{ margin: 0, paddingLeft: '1.25rem', color: 'var(--text-main)', fontSize: '0.9rem', display: 'flex', flexDirection: 'column', gap: '0.3rem' }}>
-                          {matchingQuestions.map((mq, mqIdx) => (
-                            <li key={mqIdx}>{mq.text}</li>
-                          ))}
-                        </ul>
-                      </div>
-                    )}
-                  </div>
-                );
-              })}
-            </div>
-            
-            {/* Action Controls Bar */}
-            <div className="action-bar" style={{ paddingTop: '1rem', marginTop: '1rem', borderTop: '1px solid var(--border)' }}>
-              <div style={{ display: 'flex', gap: '0.5rem' }}>
-                <button
-                  onClick={handlePrev}
-                  disabled={currentIndex === 0}
-                  className="btn btn-secondary btn-small"
-                  style={{ borderRadius: '8px', padding: '0.45rem 0.85rem', fontSize: '0.86rem' }}
-                >
-                  <ChevronLeft size={16} />
-                  <span>Quay lại</span>
-                </button>
-                <button
-                  onClick={handleNext}
-                  disabled={currentIndex === activeQuestions.length - 1}
-                  className="btn btn-secondary btn-small"
-                  style={{ borderRadius: '8px', padding: '0.45rem 0.85rem', fontSize: '0.86rem' }}
-                >
-                  <span>Tiếp theo</span>
-                  <ChevronRight size={16} />
-                </button>
-              </div>
+          {/* Action Controls Bar */}
+          <div className="action-bar" style={{ paddingTop: '1rem', marginTop: '1rem', borderTop: '1px solid var(--border)' }}>
+            <div style={{ display: 'flex', gap: '0.5rem' }}>
+              <button
+                onClick={handlePrev}
+                disabled={currentIndex === 0}
+                className="btn btn-secondary btn-small"
+                style={{ borderRadius: '8px', padding: '0.45rem 0.85rem', fontSize: '0.86rem' }}
+              >
+                <ChevronLeft size={16} />
+                <span>Quay lại</span>
+              </button>
+              <button
+                onClick={handleNext}
+                disabled={currentIndex === activeQuestions.length - 1}
+                className="btn btn-secondary btn-small"
+                style={{ borderRadius: '8px', padding: '0.45rem 0.85rem', fontSize: '0.86rem' }}
+              >
+                <span>Tiếp theo</span>
+                <ChevronRight size={16} />
+              </button>
             </div>
           </div>
-
         </div>
-      ) : (
-        <div className="part3-split-layout">
-          {/* SPLIT SCREEN LAYOUT: Left (Passage) & Right (Questions) */}
-          
-          {/* Left Column: People's Statements (Khung đoạn văn) */}
-          <div className="part3-reading-card">
-            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', paddingBottom: '0.4rem', borderBottom: '1px solid var(--border)' }}>
-              <div>
-                <h3 style={{ fontSize: '0.98rem', fontWeight: 700, color: 'var(--text-main)', margin: 0 }}>
-                  Đoạn văn (Ý kiến 4 người A, B, C, D)
-                </h3>
-                <p className="text-muted" style={{ fontSize: '0.8rem', margin: '0.1rem 0 0 0' }}>
-                  Đọc kỹ đoạn phát biểu của từng người để trả lời các câu hỏi bên phải.
-                </p>
-              </div>
-            </div>
 
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '0.65rem' }}>
-              {currentQuestion.peopleTexts.map((text, idx) => {
-                const char = String.fromCharCode(65 + idx);
-                return (
-                  <div key={idx} className="part3-person-item">
-                    <div className="part3-person-header">
-                      <div className="part3-person-badge">{char}</div>
-                      <span>Người {char}</span>
-                    </div>
-                    <div
-                      className="part3-person-text"
-                      dangerouslySetInnerHTML={{ __html: text }}
-                    />
-                  </div>
-                );
-              })}
-            </div>
-          </div>
-
-          {/* Right Column: Questions & Options (Khung câu hỏi) */}
-          <div className="part3-questions-card">
-            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', paddingBottom: '0.4rem', borderBottom: '1px solid var(--border)' }}>
-              <div>
-                <h3 style={{ fontSize: '0.98rem', fontWeight: 700, color: 'var(--text-main)', margin: 0 }}>
-                  {isStudy ? 'Đáp án chuẩn 7 câu hỏi' : 'Danh sách 7 câu hỏi'}
-                </h3>
-                <p className="text-muted" style={{ fontSize: '0.8rem', margin: '0.1rem 0 0 0' }}>
-                  Chọn người (A, B, C, D) tương ứng với nội dung câu hỏi.
-                </p>
-              </div>
-            </div>
-
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '0.45rem', flex: 1 }}>
-              {currentQuestion.questions.map((q, qIdx) => {
-                const userChoice = selectedAnswers[qIdx];
-                const isCorrect = isChecked ? userChoice === q.answer : null;
-                const correctChar = String.fromCharCode(65 + q.answer);
-
-                let itemClass = '';
-                if (isChecked) {
-                  itemClass = isCorrect ? 'is-correct' : 'is-incorrect';
-                }
-
-                return (
-                  <div key={qIdx} className={`part3-question-item ${itemClass}`}>
-                    <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', gap: '0.5rem' }}>
-                      <div className="part3-question-text">
-                        <span style={{ fontWeight: 700, color: 'var(--primary)', marginRight: '0.35rem' }}>
-                          {qIdx + 1}.
-                        </span>
-                        <span>{q.text}</span>
-                      </div>
-
-                      {/* Feedback tag */}
-                      {isChecked && (
-                        <div style={{ flexShrink: 0 }}>
-                          {isCorrect ? (
-                            <span className="feedback-tag correct">
-                              <Check size={12} />
-                              <span>Đúng</span>
-                            </span>
-                          ) : (
-                            <span className="feedback-tag incorrect">
-                              <X size={12} />
-                              <span>Đáp án: {correctChar}</span>
-                            </span>
-                          )}
-                        </div>
-                      )}
-                    </div>
-
-                    {/* Options row A, B, C, D */}
-                    <div className="part3-options-row">
-                      {[0, 1, 2, 3].map(personIdx => {
-                        const char = String.fromCharCode(65 + personIdx);
-                        const isSelected = userChoice === personIdx;
-                        let optClass = '';
-
-                        if (isChecked && personIdx === q.answer) {
-                          optClass = 'is-correct-answer';
-                        } else if (isChecked && isSelected && !isCorrect) {
-                          optClass = 'is-wrong-selection';
-                        } else if (isSelected) {
-                          optClass = 'is-selected';
-                        }
-
-                        return (
-                          <button
-                            key={personIdx}
-                            disabled={isChecked}
-                            onClick={() => handleSelect(qIdx, personIdx)}
-                            className={`part3-opt-btn ${optClass}`}
-                          >
-                            {char}
-                          </button>
-                        );
-                      })}
-                    </div>
-                  </div>
-                );
-              })}
-            </div>
-
-            {/* Action Controls Bar */}
-            <div className="action-bar" style={{ paddingTop: '0.85rem', marginTop: 'auto', borderTop: '1px solid var(--border)' }}>
-              <div style={{ display: 'flex', gap: '0.5rem' }}>
-                <button
-                  onClick={handlePrev}
-                  disabled={currentIndex === 0}
-                  className="btn btn-secondary btn-small"
-                  style={{ borderRadius: '8px', padding: '0.45rem 0.85rem', fontSize: '0.86rem' }}
-                >
-                  <ChevronLeft size={16} />
-                  <span>Quay lại</span>
-                </button>
-                <button
-                  onClick={handleNext}
-                  disabled={currentIndex === activeQuestions.length - 1}
-                  className="btn btn-secondary btn-small"
-                  style={{ borderRadius: '8px', padding: '0.45rem 0.85rem', fontSize: '0.86rem' }}
-                >
-                  <span>Tiếp theo</span>
-                  <ChevronRight size={16} />
-                </button>
-              </div>
-
-              <div style={{ display: 'flex', gap: '0.5rem', alignItems: 'center' }}>
-                {isChecked && !isStudy && (
-                  <button
-                    onClick={handleResetQuestion}
-                    className="btn btn-secondary btn-small"
-                    style={{ borderRadius: '8px', padding: '0.45rem 0.85rem', fontSize: '0.86rem' }}
-                  >
-                    <RotateCcw size={14} />
-                    <span>Thử lại</span>
-                  </button>
-                )}
-
-                {!isStudy && !isChecked && (
-                  <button
-                    onClick={handleCheck}
-                    disabled={!isAllAnswered}
-                    className="btn btn-primary btn-small"
-                    style={{ minWidth: '115px', borderRadius: '8px', padding: '0.45rem 0.95rem', fontSize: '0.86rem' }}
-                  >
-                    <CheckCircle size={16} />
-                    <span>Kiểm tra</span>
-                  </button>
-                )}
-              </div>
-            </div>
-          </div>
-
-        </div>
-      )}
+      </div>
 
       {/* RESULT POPUP MODAL (When has wrong answers) */}
       {showResultPopup && (
@@ -913,4 +740,4 @@ const PracticePart3 = () => {
   );
 };
 
-export default PracticePart3;
+export default PracticePart3Ver2;

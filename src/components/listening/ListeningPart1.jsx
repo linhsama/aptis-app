@@ -502,6 +502,7 @@ const ListeningPart1 = () => {
             audioUrl={currentQuestion.audioUrl}
             transcript={currentQuestion.transcript}
             maxPlays={2}
+            autoPlay={true}
           />
 
           {/* Transcript & Vietnamese Translation Box */}

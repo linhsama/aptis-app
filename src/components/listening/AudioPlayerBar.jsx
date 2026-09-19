@@ -25,7 +25,8 @@ const AudioPlayerBar = ({
   audioUrl,
   transcript,
   onPlayCountChange,
-  maxPlays = 2
+  maxPlays = 2,
+  autoPlay = false
 }) => {
   const [isPlaying, setIsPlaying] = useState(false);
   const [currentTime, setCurrentTime] = useState(0);
@@ -70,11 +71,27 @@ const AudioPlayerBar = ({
       if (audioRef.current) {
         audioRef.current.playbackRate = playbackRate;
         audioRef.current.load();
+        if (autoPlay) {
+          setTimeout(() => {
+            if (audioRef.current) {
+              audioRef.current.play().then(() => {
+                setIsPlaying(true);
+              }).catch((err) => {
+                console.warn("Autoplay native audio failed:", err);
+                setUseTTS(true);
+                startTTSPlayback(0);
+              });
+            }
+          }, 50);
+        }
       }
     } else {
       setUseTTS(true);
+      if (autoPlay) {
+        setTimeout(() => startTTSPlayback(0), 50);
+      }
     }
-  }, [audioUrl, transcript]);
+  }, [audioUrl, transcript, autoPlay]);
 
   useEffect(() => {
     if (audioRef.current) {
